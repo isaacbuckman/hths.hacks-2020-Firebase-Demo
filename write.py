@@ -1,15 +1,17 @@
-from firebase import firebase
+import firebase_admin
+from firebase_admin import credentials, db
+import math
 
-firebase = firebase.FirebaseApplication("https://test-ddf2c.firebaseio.com/", None)
+cred = credentials.Certificate("test-ddf2c-firebase-adminsdk-5tva7-6b546e57b4.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL' : 'https://test-ddf2c.firebaseio.com/'
+})
 
-name1 = "HTHS"
-currentlat = float(input("Current Latitude: "))
-currentlong = float(input("Current Longitude: "))
+root = db.reference()
 
-data = {
-    'name':name1,
-    'lat':currentlat,
-    'long':currentlong
-}
+new_person = {}
+new_person['name'] = input("name: ")
+new_person['lat'] = float(input("Latitude: "))
+new_person['long'] = float(input("Longitude: "))
 
-post = firebase.post('people', data)
+root.child('people').push(new_person)
