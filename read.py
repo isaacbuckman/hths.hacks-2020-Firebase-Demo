@@ -9,9 +9,12 @@ firebase_admin.initialize_app(cred, {
 
 root = db.reference()
 
+lat = float(input("Enter Lat: "))
+longi = float(input("Enter Long: "))
+
 people = db.reference('people').get()
 
 if people is not None:
 	for p in people.values():
-		distance = math.sqrt((new_person['lat'] - float(p['lat']))**2 + (new_person['long'] - float(p['long']))**2)
+		distance = math.sqrt((lat - float(p['lat']))**2 + (longi - float(p['long']))**2)
 		print("You are {distance} degress from {name}.".format(distance = distance, name = p['name']))
